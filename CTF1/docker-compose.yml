@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  ctf-web:
+    build: .
+    ports:
+      - "8080:80"
+    restart: always

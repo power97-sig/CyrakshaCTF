@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>There Is No Flag Here — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #090b10;
+            --bg-surface: #10141d;
+            --bg-card: #151a26;
+            --border-color: #232b3e;
+            --border-bright: #36415d;
+            --brand-red: #d90429;
+            --brand-red-light: #ef233c;
+            --brand-red-glow: rgba(217, 4, 41, 0.25);
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-heading: 'Bebas Neue', 'Anton', sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        .arena-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(217, 4, 41, 0.08) 0%, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+        }
+
+        .layout-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .arena-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-m {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .brand-dot {
+            color: var(--brand-red);
+            font-family: var(--font-heading);
+            font-size: 36px;
+            line-height: 0;
+            margin-right: 6px;
+        }
+
+        .brand-title {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #e2e8f0;
+        }
+
+        .brand-arena-badge {
+            background: rgba(217, 4, 41, 0.15);
+            border: 1px solid rgba(217, 4, 41, 0.4);
+            color: var(--brand-red-light);
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+            margin-left: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            color: var(--text-main);
+            border-color: var(--brand-red);
+            background: rgba(217, 4, 41, 0.08);
+        }
+
+        .header-box {
+            border-left: 4px solid var(--brand-red);
+            padding-left: 24px;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 44px;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--brand-red-light);
+            margin-bottom: 2px;
+        }
+
+        .subtext {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .content-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
+        }
+
+        .content-box p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .content-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hidden-flag {
+            font-size: 0px;
+            color: transparent;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="arena-bg"></div>
+
+    <div class="layout-wrapper">
+        <nav class="arena-nav">
+            <a href="../../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">INSPECT TRACK</span>
+            </a>
+
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-nav">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Track Hub</span>
+                </a>
+                <a href="../../dashboard.html" target="_top" class="btn-nav">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Arena</span>
+                </a>
+            </div>
+        </nav>
+
+        <header class="header-box">
+            <h1>THERE IS NO FLAG HERE.</h1>
+            <div class="subtitle">Seriously.</div>
+            <div class="subtext">Stop looking.</div>
+        </header>
+
+        <main class="content-box">
+            <p>Security assessments often begin with the assumption that sensitive parameters or artifacts remain securely sequestered within backend datastores or encrypted enclaves. However, superficial analysis frequently obscures the fundamental reality that what is visually perceived in a client-side environment is merely a rendered representation of the underlying Document Object Model. Analysts must remain cognizant of structural discrepancies between interface layers and source nodes.</p>
+            <p>In distributed telemetry frameworks, diagnostic telemetry channels routinely ingest arbitrary operational strings without explicit sanitation boundaries. While operational monitoring dashboards present a sanitized, aggregated interface to end users, the raw ingested payloads remain intact within the underlying payload buffers and serialization graphs. Persistent inspection of DOM trees frequently yields unanticipated discoveries across legacy endpoints.</p>
+            <p>When auditing modern single-page architectures, rendered viewports conceal significant amounts of non-visual metadata. Elements containing styling attributes such as zero font dimension, opacity nullification, or matching background chromatics may escape the human eye, yet they persist indelibly within the inspector panel.<span class="hidden-flag">flag{you_should_have_looked_closer}</span> Every defensive practitioner must understand that client-rendered presentation never dictates the true boundaries of document data.</p>
+            <p>Telemetry nodes frequently retain legacy tokens across historical schema migrations. Security auditors must verify data integrity at the transport layer, ensuring that deprecated endpoints do not inadvertently leak confidential authorization artifacts or token payloads to unauthenticated sessions.</p>
+        </main>
+    </div>
+
+    <script src="../../js/dynamic-flags.js"></script>
+    <script>
+        // Dynamically inject personalized team flag into hidden DOM node
+        (function() {
+            try {
+                const team = (window.CTF_FLAGS && window.CTF_FLAGS.getActiveTeamName) ? window.CTF_FLAGS.getActiveTeamName() : 'anonymous_team';
+                const token = (window.CTF_FLAGS && window.CTF_FLAGS.getTeamToken) ? window.CTF_FLAGS.getTeamToken(team, 'ctf1') : '';
+                const flag = token ? `flag{you_should_have_looked_closer_${token}}` : 'flag{you_should_have_looked_closer}';
+                const el = document.querySelector('.hidden-flag');
+                if (el) el.textContent = flag;
+            } catch (e) {}
+        })();
+
+        document.querySelectorAll('a[href*="dashboard.html"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (window.self !== window.top) {
+                    e.preventDefault();
+                    try {
+                        window.parent.postMessage({ action: 'close_runner_modal' }, '*');
+                    } catch (err) {
+                        window.top.location.href = a.href;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

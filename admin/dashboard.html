@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center &amp; Live Leaderboard — CTF BOX Admin</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+
+<body class="dashboard-body">
+    <div class="arena-bg"></div>
+
+    <div class="dashboard-layout">
+        <!-- Top Nav Header -->
+        <header class="admin-nav">
+            <div class="nav-left">
+                <a href="dashboard.html" class="nav-brand">
+                    <span class="brand-m">M</span>
+                    <span class="brand-dot">.</span>
+                    <span class="brand-title">CTF BOX</span>
+                    <span class="brand-arena-badge">ADMIN COMMAND CENTER</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <div class="live-pill">
+                    <span class="pulse-dot"></span>
+                    <span class="live-text" id="live-poll-status">LIVE SYNC ACTIVE (5s)</span>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="admin-profile-pill">
+                    <span class="admin-avatar">AD</span>
+                    <div class="admin-meta">
+                        <span class="admin-name" id="admin-display-name">Administrator</span>
+                        <span class="admin-role">SUPER ADMIN</span>
+                    </div>
+                </div>
+
+                <button class="btn-tool" id="btn-export-csv" title="Export Results to CSV">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Export CSV</span>
+                </button>
+
+                <button class="btn-tool" id="btn-manual-refresh" title="Refresh Telemetry">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                    <span>Refresh</span>
+                </button>
+
+                <button class="btn-tool btn-danger-tool" id="btn-reset-scores" title="Reset all participant scores to start fresh contest">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span>Clear Data</span>
+                </button>
+
+                <button class="btn-logout" id="btn-admin-logout" title="Sign Out">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Container -->
+        <main class="admin-main">
+            <!-- Metric KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">TOTAL REGISTERED TEAMS</span>
+                        <div class="kpi-icon-wrap">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="kpi-total-teams">0</div>
+                    <div class="kpi-footer">Across Solo &amp; Duo Divisions</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">TOTAL FLAGS SOLVED</span>
+                        <div class="kpi-icon-wrap accent-crimson">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value highlight-red" id="kpi-total-solves">0</div>
+                    <div class="kpi-footer">Verified Submissions</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">LEADERBOARD TOP TEAM</span>
+                        <div class="kpi-icon-wrap accent-gold">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value kpi-team-name" id="kpi-top-team">—</div>
+                    <div class="kpi-footer" id="kpi-top-score">0 PTS (Time: —)</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">AVERAGE TEAM SCORE</span>
+                        <div class="kpi-icon-wrap">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="kpi-avg-score">0 PTS</div>
+                    <div class="kpi-footer">Out of 2700 Max Points</div>
+                </div>
+            </section>
+
+            <!-- Navigation Sub-Tabs -->
+            <div class="admin-section-nav">
+                <div class="subtabs-left">
+                    <button class="nav-tab-btn active" data-target="section-leaderboard">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7.5"></path><path d="M14 14.66V17c0 .55.45 1 1 1h1.5"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                        <span>OFFICIAL LEADERBOARD (TIE-BREAKER ENABLED)</span>
+                    </button>
+                    <button class="nav-tab-btn" data-target="section-participants">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <span>ALL PARTICIPANTS</span>
+                    </button>
+                    <button class="nav-tab-btn" data-target="section-feed">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        <span>LIVE SOLVE STREAM</span>
+                    </button>
+                    <button class="nav-tab-btn" data-target="section-investigator">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                        <span>MESSAGES BY INVESTIGATOR</span>
+                        <span id="investigator-unread-badge" class="badge-unread-count" style="display: none;">0</span>
+                    </button>
+                </div>
+
+                <div class="subtabs-right">
+                    <div class="search-box">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="filter-search-input" placeholder="Search team name...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. OFFICIAL LEADERBOARD SECTION -->
+            <section id="section-leaderboard" class="admin-tab-pane active">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">LIVE RANKINGS &amp; TIE-BREAKER STANDINGS</h2>
+                            <p class="panel-desc">
+                                Ranks are determined primarily by <strong>Total Points</strong>. 
+                                In the event of a tie, rank position is awarded to the team with <strong>lesser time taken</strong> (earlier last solve).
+                            </p>
+                        </div>
+                        <div class="tiebreaker-info-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                            <span>TIME-BASED TIE-BREAKER ACTIVE</span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="arena-table leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 70px;">RANK</th>
+                                    <th>TEAM NAME</th>
+                                    <th>DIVISION</th>
+                                    <th>CHALLENGES MATRIX (CTF 0–7)</th>
+                                    <th style="text-align: center;">TOTAL POINTS</th>
+                                    <th>TIME TAKEN</th>
+                                    <th>TIE-BREAKER STATUS</th>
+                                    <th style="text-align: right;">AUDIT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-tbody">
+                                <tr>
+                                    <td colspan="8" class="table-loading">Loading live leaderboard...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. ALL PARTICIPANTS DIRECTORY SECTION -->
+            <section id="section-participants" class="admin-tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">ALL REGISTERED PARTICIPANTS</h2>
+                            <p class="panel-desc">Complete directory of all registered teams with real-time online/offline presence and solve records.</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="arena-table participants-table">
+                            <thead>
+                                <tr>
+                                    <th>TEAM NAME</th>
+                                    <th>PRESENCE</th>
+                                    <th>DIVISION</th>
+                                    <th>REGISTERED ON</th>
+                                    <th>SOLVED / TOTAL</th>
+                                    <th>SCORE</th>
+                                    <th>LAST ACTIVE / SOLVE</th>
+                                    <th style="text-align: right;">AUDIT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="participants-tbody">
+                                <tr>
+                                    <td colspan="8" class="table-loading">Loading participant directory...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. LIVE SOLVE STREAM SECTION -->
+            <section id="section-feed" class="admin-tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">REAL-TIME CONTEST ACTIVITY STREAM</h2>
+                            <p class="panel-desc">Chronological event log of all flag submissions and solves.</p>
+                        </div>
+                    </div>
+
+                    <div class="activity-timeline" id="activity-feed-list">
+                        <div class="timeline-empty">No solves logged yet. Waiting for participant activity...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. MESSAGES BY INVESTIGATOR / INTEL REPORTS SECTION -->
+            <section id="section-investigator" class="admin-tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">INVESTIGATOR INTELLIGENCE &amp; MALPRACTICE REPORTS</h2>
+                            <p class="panel-desc">
+                                Live incident reports and cheating allegations filed by proctors &amp; investigators from the field.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <select id="investigator-filter-status" class="admin-status-select">
+                                <option value="all">ALL STATUSES</option>
+                                <option value="pending" selected>PENDING REVIEW</option>
+                                <option value="action_taken">ACTION TAKEN</option>
+                                <option value="resolved">RESOLVED</option>
+                                <option value="dismissed">DISMISSED</option>
+                            </select>
+                            <a href="../investigator/index.html" target="_blank" class="btn-open-portal" title="Open Investigator Portal">
+                                <span>Investigator Portal ↗</span>
+                            </a>
+                            <button class="btn-action-refresh" id="btn-refresh-investigator-reports" title="Refresh Reports">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="arena-table investigator-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">TIMESTAMP</th>
+                                    <th style="width: 130px;">INVESTIGATOR</th>
+                                    <th style="width: 150px;">SUSPECT TEAM</th>
+                                    <th style="width: 160px;">VIOLATION TYPE</th>
+                                    <th>EVIDENCE &amp; OBSERVATIONS</th>
+                                    <th style="width: 130px; text-align: center;">STATUS</th>
+                                    <th style="text-align: right; width: 230px;">ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="investigator-tbody">
+                                <tr>
+                                    <td colspan="7" class="table-loading">Loading investigator reports...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PARTICIPANT AUDIT MODAL -->
+    <div class="modal-backdrop" id="audit-modal">
+        <div class="modal-card audit-modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="modal-team-title">TEAM AUDIT LOG</h3>
+                    <p class="modal-subtitle" id="modal-team-meta">Detailed breakdown of solves and timestamps</p>
+                </div>
+                <button class="modal-close" id="btn-close-audit">✕</button>
+            </div>
+
+            <div class="modal-body" id="audit-modal-body">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTICIPANT SUSPENSION MODAL -->
+    <div class="modal-backdrop" id="suspend-modal">
+        <div class="modal-card suspend-modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="suspend-modal-title">SUSPEND PARTICIPANT</h3>
+                    <p class="modal-subtitle">Set temporary lockout duration and notify the team</p>
+                </div>
+                <button class="modal-close" id="btn-close-suspend">✕</button>
+            </div>
+
+            <div class="modal-body" style="padding: 24px;">
+                <input type="hidden" id="suspend-target-team" value="">
+                
+                <div class="suspend-target-badge" id="suspend-target-display">
+                    TEAM: <span id="suspend-target-name" style="color: #ff334b; font-weight: 800;">—</span>
+                </div>
+
+                <div class="form-group" style="margin-top: 18px;">
+                    <label class="form-label">SUSPENSION DURATION</label>
+                    <div class="duration-pill-group">
+                        <button type="button" class="duration-pill" data-mins="5">5 MIN</button>
+                        <button type="button" class="duration-pill active" data-mins="15">15 MIN</button>
+                        <button type="button" class="duration-pill" data-mins="30">30 MIN</button>
+                        <button type="button" class="duration-pill" data-mins="60">1 HOUR</button>
+                        <button type="button" class="duration-pill" data-mins="1440">24 HOURS</button>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+                        <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">Or custom minutes:</span>
+                        <input type="number" id="suspend-custom-mins" min="1" max="10080" placeholder="e.g. 45" style="width: 110px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 6px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 18px;">
+                    <label class="form-label">REASON / MESSAGE FOR PARTICIPANT</label>
+                    <textarea id="suspend-reason-input" rows="3" placeholder="e.g. Flag sharing / script abuse detected. Penalty applied for 15 minutes." style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 10px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px; resize: vertical;"></textarea>
+                </div>
+
+                <div class="modal-actions" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+                    <button type="button" class="btn-cancel" id="btn-cancel-suspend" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">CANCEL</button>
+                    <button type="button" class="btn-confirm-suspend" id="btn-submit-suspend" style="background: #ff2238; border: none; color: #fff; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 800; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                        <span>⛔ ENFORCE SUSPENSION</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/dynamic-flags.js"></script>
+    <script src="/admin/js/admin-dashboard.js"></script>
+</body>
+
+</html>

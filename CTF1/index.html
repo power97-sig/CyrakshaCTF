@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyraksha CTF Challenge Hub — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #090b10;
+            --bg-surface: #10141d;
+            --bg-card: #151a26;
+            --bg-card-hover: #1c2232;
+            --border-color: #232b3e;
+            --border-bright: #36415d;
+            --brand-red: #d90429;
+            --brand-red-light: #ef233c;
+            --brand-red-glow: rgba(217, 4, 41, 0.25);
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-heading: 'Bebas Neue', 'Anton', sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .arena-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(217, 4, 41, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.06) 0%, transparent 45%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+        }
+
+        .layout-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .arena-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-m {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .brand-dot {
+            color: var(--brand-red);
+            font-family: var(--font-heading);
+            font-size: 36px;
+            line-height: 0;
+            margin-right: 6px;
+        }
+
+        .brand-title {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #e2e8f0;
+        }
+
+        .brand-arena-badge {
+            background: rgba(217, 4, 41, 0.15);
+            border: 1px solid rgba(217, 4, 41, 0.4);
+            color: var(--brand-red-light);
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+            margin-left: 8px;
+        }
+
+        .btn-back-arena {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-arena:hover {
+            color: var(--text-main);
+            border-color: var(--brand-red);
+            background: rgba(217, 4, 41, 0.08);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        .challenge-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-bright);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(217, 4, 41, 0.15);
+        }
+
+        .category-tag {
+            display: inline-block;
+            align-self: flex-start;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .tag-web {
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .tag-forensics {
+            background: rgba(217, 4, 41, 0.12);
+            color: var(--brand-red-light);
+            border: 1px solid rgba(217, 4, 41, 0.3);
+        }
+
+        .challenge-card h2 {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .challenge-card p {
+            color: var(--text-secondary);
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-light) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(217, 4, 41, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(217, 4, 41, 0.5);
+            background: linear-gradient(135deg, var(--brand-red-light) 0%, #ff4d6d 100%);
+        }
+
+        .btn-secondary {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            border-color: var(--brand-red);
+            color: #ffffff;
+            background: rgba(217, 4, 41, 0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="arena-bg"></div>
+
+    <div class="layout-wrapper">
+        <nav class="arena-nav">
+            <a href="../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">CHALLENGE 01</span>
+            </a>
+
+            <a href="../dashboard.html" target="_top" class="btn-back-arena">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Arena</span>
+            </a>
+        </nav>
+
+        <header class="page-header">
+            <h1>CYRAKSHA CHALLENGE HUB</h1>
+            <p>Select an investigative track below to extract the target flags.</p>
+        </header>
+
+        <main class="challenges-grid">
+            <div class="challenge-card">
+                <div>
+                    <span class="category-tag tag-web">Web / Inspect</span>
+                    <h2>There Is No Flag Here</h2>
+                    <p>A simple webpage claiming there is absolutely no flag. Inspect the client-side Document Object Model to uncover what is hidden in plain sight.</p>
+                </div>
+                <a class="btn-action btn-primary" href="there_is_no_flag_here/index.html">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>Open Challenge</span>
+                </a>
+            </div>
+
+            <div class="challenge-card">
+                <div>
+                    <span class="category-tag tag-forensics">Misc / Forensics</span>
+                    <h2>The "Totally Normal" ZIP</h2>
+                    <p>An archive containing event media and confidential schedule documents. Inspect the archive structure thoroughly to extract the hidden file payload.</p>
+                </div>
+                <a class="btn-action btn-secondary" href="cyraksha_event.zip" id="btn-download-zip" download>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Download Archive</span>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="../js/dynamic-flags.js"></script>
+    <script>
+        // Dynamically bundle personalized zip archive with participant's dynamic flag
+        const zipBtn = document.getElementById('btn-download-zip');
+        if (zipBtn && window.JSZip) {
+            zipBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const team = (window.CTF_FLAGS && window.CTF_FLAGS.getActiveTeamName) ? window.CTF_FLAGS.getActiveTeamName() : 'anonymous_team';
+                const token = (window.CTF_FLAGS && window.CTF_FLAGS.getTeamToken) ? window.CTF_FLAGS.getTeamToken(team, 'ctf1') : '';
+                const dynamicFlag = token ? `flag{hidden_files_are_still_files_${token}}` : 'flag{hidden_files_are_still_files}';
+
+                const zip = new JSZip();
+                zip.file("schedule.txt", "CYRAKSHA 2026 - EVENT SCHEDULE\nDate: October 14, 2026\nVenue: Main Auditorium & Cyber Labs\n\n09:00 AM - 09:30 AM : Registration and Welcome Kit Distribution\n09:30 AM - 10:30 AM : Keynote Address: Emerging Threats in Modern Infrastructure\n10:30 AM - 11:45 AM : Workshop A: Reverse Engineering and Binary Exploitation\n11:45 AM - 01:00 PM : Workshop B: Web Application Vulnerabilities & Defense\n01:00 PM - 02:00 PM : Networking Lunch\n02:00 PM - 05:00 PM : Annual Cyraksha CTF Competition\n05:00 PM - 05:30 PM : High Tea & Scoreboard Freeze\n05:30 PM - 06:30 PM : Awards Ceremony & Closing Remarks\n");
+                zip.file(".flag.txt", "Hi There! Sorry but you are lowkey scammed! Have a great day :)\n");
+                zip.file("readme.txt", `${dynamicFlag}\n`);
+
+                try {
+                    const photoRes = await fetch('totally_normal_zip/photo.jpg');
+                    if (photoRes.ok) {
+                        const blob = await photoRes.blob();
+                        zip.file("photo.jpg", blob);
+                    }
+                } catch (err) {}
+
+                const content = await zip.generateAsync({ type: "blob" });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(content);
+                link.download = "cyraksha_event.zip";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+
+        document.querySelectorAll('a[href*="dashboard.html"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (window.self !== window.top) {
+                    e.preventDefault();
+                    try {
+                        window.parent.postMessage({ action: 'close_runner_modal' }, '*');
+                    } catch (err) {
+                        window.top.location.href = a.href;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

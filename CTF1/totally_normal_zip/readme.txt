@@ -1,0 +1,1 @@
+flag{hidden_files_are_still_files}

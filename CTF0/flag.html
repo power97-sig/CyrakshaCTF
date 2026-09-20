@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Liar Button — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #090b10;
+            --bg-surface: #10141d;
+            --bg-card: #151a26;
+            --bg-card-hover: #1c2232;
+            --border-color: #232b3e;
+            --border-bright: #36415d;
+            --brand-red: #d90429;
+            --brand-red-light: #ef233c;
+            --brand-red-glow: rgba(217, 4, 41, 0.25);
+            --accent-emerald: #10b981;
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-heading: 'Bebas Neue', 'Anton', sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Cyber Grid */
+        .arena-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(217, 4, 41, 0.09) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 45%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+        }
+
+        .layout-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Top Navbar */
+        .arena-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-m {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        .brand-dot {
+            color: var(--brand-red);
+            font-family: var(--font-heading);
+            font-size: 36px;
+            line-height: 0;
+            margin-right: 6px;
+        }
+
+        .brand-title {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #e2e8f0;
+        }
+
+        .brand-arena-badge {
+            background: rgba(217, 4, 41, 0.15);
+            border: 1px solid rgba(217, 4, 41, 0.4);
+            color: var(--brand-red-light);
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+            margin-left: 8px;
+        }
+
+        .btn-back-arena {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-arena:hover {
+            color: var(--text-main);
+            border-color: var(--brand-red);
+            background: rgba(217, 4, 41, 0.08);
+        }
+
+        /* Main Center Area */
+        .main-arena-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        .challenge-container {
+            width: 100%;
+            max-width: 580px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), 0 0 40px -15px var(--brand-red-glow);
+            transition: border-color 0.3s ease;
+        }
+
+        .challenge-container:hover {
+            border-color: var(--border-bright);
+        }
+
+        .card-top-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(217, 4, 41, 0.12);
+            border: 1px solid rgba(217, 4, 41, 0.3);
+            color: var(--brand-red-light);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-title {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .challenge-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 28px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-light) 100%);
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(217, 4, 41, 0.35);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(217, 4, 41, 0.5);
+            background: linear-gradient(135deg, var(--brand-red-light) 0%, #ff4d6d 100%);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        #message {
+            margin-top: 24px;
+            min-height: 24px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: #f87171;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            display: none;
+        }
+
+        #message:not(:empty) {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="arena-bg"></div>
+
+    <div class="layout-wrapper">
+        <!-- Top Navigation -->
+        <nav class="arena-nav">
+            <a href="../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">CHALLENGE 00</span>
+            </a>
+
+            <a href="../dashboard.html" target="_top" class="btn-back-arena">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Arena</span>
+            </a>
+        </nav>
+
+        <!-- Main Challenge View -->
+        <main class="main-arena-content">
+            <div class="challenge-container">
+                <div class="card-top-tag">WEB / DOM INSPECTION</div>
+                
+                <h1 class="challenge-title">THE LIAR BUTTON</h1>
+                
+                <p class="challenge-desc">
+                    You have reached the final step. A single button stands between you and the secret payload. Claim your flag below.
+                </p>
+
+                <button class="action-button" onclick="wrongAnswer()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>Click here to get your flag</span>
+                </button>
+
+                <div id="message"></div>
+
+                <!-- Maybe you're looking in the wrong place... -->
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/dynamic-flags.js"></script>
+    <script>
+        function wrongAnswer() {
+            document.getElementById("message").textContent =
+                "❌ Nice try. The flag isn't that easy.";
+        }
+
+        // Dynamically inject personalized team flag into DOM comment
+        (function() {
+            try {
+                const team = (window.CTF_FLAGS && window.CTF_FLAGS.getActiveTeamName) ? window.CTF_FLAGS.getActiveTeamName() : 'anonymous_team';
+                const token = (window.CTF_FLAGS && window.CTF_FLAGS.getTeamToken) ? window.CTF_FLAGS.getTeamToken(team, 'ctf0') : '';
+                const flag = token ? `flag{inspect_before_you_click_${token}}` : 'flag{inspect_before_you_click}';
+                const container = document.querySelector('.challenge-container');
+                if (container) {
+                    const c = document.createComment(`\n    CTF FLAG:\n    ${flag}\n`);
+                    container.appendChild(c);
+                }
+            } catch (e) {}
+        })();
+
+        // Close runner modal if opened inside parent iframe
+        document.querySelectorAll('a[href*="dashboard.html"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (window.self !== window.top) {
+                    e.preventDefault();
+                    try {
+                        window.parent.postMessage({ action: 'close_runner_modal' }, '*');
+                    } catch (err) {
+                        window.top.location.href = a.href;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

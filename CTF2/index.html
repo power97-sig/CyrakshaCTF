@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYRAKSHA - Sign In — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <input type="hidden" name="password" value="CYRAKSHA2026">
+
+    <div class="arena-bg"></div>
+
+    <div class="layout-wrapper">
+        <nav class="arena-nav">
+            <a href="../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">CHALLENGE 02</span>
+            </a>
+
+            <a href="../dashboard.html" target="_top" class="btn-back-arena">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Arena</span>
+            </a>
+        </nav>
+
+        <div class="center-arena-area">
+            <!-- Login View -->
+            <div class="auth-wrapper" id="login-view">
+                <div class="hero-card">
+                    <div class="hero-image-layer" style="background-image: url('static/images/hero.jpg');"></div>
+                    <div class="hero-overlay"></div>
+
+                    <div class="hero-top">
+                        <div class="brand-logo">
+                            <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+                                <path d="M6 24L16 6L26 24" stroke="var(--brand-red-light)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11 18H21" stroke="var(--brand-red-light)" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                            <span class="logo-text">CYRAKSHA</span>
+                        </div>
+                        <a href="../dashboard.html" target="_top" class="back-link">
+                            <span>Back to Arena</span>
+                            <svg viewBox="0 0 20 20" fill="currentColor" class="arrow-icon">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="hero-bottom">
+                        <h2 class="hero-title">AUTHENTICATION<br>GATEWAY</h2>
+                        <div class="carousel-dots">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot active"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-container">
+                        <div class="form-header">
+                            <h1 class="main-heading">LOG IN TO ACCOUNT</h1>
+                            <p class="sub-heading">Challenge 02 &bull; BOX 02 &mdash; <a href="#" class="auth-link" onclick="event.preventDefault()">The Password That Isn't a Password</a></p>
+                        </div>
+
+                        <div id="error-alert" class="alert-box alert-error" style="display: none;">
+                            <svg class="alert-svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="error-text">Invalid username or password. Please try again.</span>
+                        </div>
+
+                        <form id="ctf2-form" class="main-form" autocomplete="off">
+                            <div class="input-row">
+                                <div class="field-wrap">
+                                    <input type="text" id="first-name" placeholder="First name" value="Fletcher" readonly class="readonly-input">
+                                </div>
+                                <div class="field-wrap">
+                                    <input type="text" id="last-name" placeholder="Last name" readonly class="readonly-input">
+                                </div>
+                            </div>
+
+                            <div class="field-wrap">
+                                <input type="text" id="username" name="username" placeholder="Username (e.g. admin)" required autofocus>
+                            </div>
+
+                            <div class="field-wrap password-wrap">
+                                <input type="password" id="user-password" name="password" placeholder="Enter your password" required>
+                                <button type="button" class="eye-toggle" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                                    <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="checkbox-row">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">I agree to the <a href="#" class="inline-link" onclick="event.preventDefault()">Terms & Conditions</a></span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="submit-action-btn">
+                                <span>AUTHENTICATE</span>
+                            </button>
+                        </form>
+
+                        <div class="social-divider">
+                            <div class="divider-line"></div>
+                            <span class="divider-text">Or register with</span>
+                            <div class="divider-line"></div>
+                        </div>
+
+                        <div class="social-grid">
+                            <button type="button" class="social-btn">
+                                <svg class="social-icon" viewBox="0 0 24 24">
+                                    <path fill="#EA4335" d="M12 5c1.7 0 3 .6 4 1.5l3-3C17.2 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                                    <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z"/>
+                                    <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3 0-.8.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.1c0 2.8.7 5.4 1.9 7.8l3.7-2.9z"/>
+                                    <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z"/>
+                                </svg>
+                                <span>Google</span>
+                            </button>
+                            <button type="button" class="social-btn">
+                                <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.86c.62-.75 1.04-1.8 0.92-2.86-.9.04-2 .6-2.65 1.35-.57.66-1.07 1.73-.93 2.76 1.01.08 2.04-.5 2.66-1.25z"/>
+                                </svg>
+                                <span>Apple</span>
+                            </button>
+                        </div>
+
+                        <div class="hint-card">
+                            <strong class="hint-strong">Hint:</strong> The password is already hidden inside this page.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solved Dashboard View -->
+            <div class="auth-wrapper" id="dashboard-view" style="display: none;">
+                <div class="hero-card">
+                    <div class="hero-image-layer" style="background-image: url('static/images/hero.jpg');"></div>
+                    <div class="hero-overlay"></div>
+
+                    <div class="hero-top">
+                        <div class="brand-logo">
+                            <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+                                <path d="M6 24L16 6L26 24" stroke="var(--brand-red-light)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11 18H21" stroke="var(--brand-red-light)" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                            <span class="logo-text">CYRAKSHA</span>
+                        </div>
+                        <a href="#" class="back-link" onclick="resetChallenge(); return false;">
+                            <span>Logout</span>
+                            <svg viewBox="0 0 20 20" fill="currentColor" class="arrow-icon">
+                                <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="hero-bottom">
+                        <h2 class="hero-title">ACCESS GRANTED,<br>FLAG EXTRACTED</h2>
+                        <div class="carousel-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-container">
+                        <div class="form-header">
+                            <div class="status-badge-wrap">
+                                <span class="status-dot-pulse"></span>
+                                <span class="status-badge-text">AUTHENTICATED AS ADMIN</span>
+                            </div>
+                            <h1 class="main-heading">CHALLENGE SOLVED!</h1>
+                            <p class="sub-heading">"WAIT. The website literally gave me the password." That's a fantastic beginner CTF moment.</p>
+                        </div>
+
+                        <div class="flag-card-block">
+                            <div class="flag-header-row">
+                                <span class="flag-title-tag">FLAG CAPTURED</span>
+                                <span class="flag-pts-tag">+200 PTS</span>
+                            </div>
+                            <div class="flag-input-group">
+                                <code id="flag-content" class="flag-text-code">CYRAKSHA{h1dd3n_1n_pl41n_51gh7_2026}</code>
+                                <button type="button" class="flag-copy-action" id="copy-btn" onclick="copyFlagText()">
+                                    <svg viewBox="0 0 20 20" fill="currentColor" class="copy-svg-icon">
+                                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                                    </svg>
+                                    <span id="copy-label">Copy</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="summary-details-card">
+                            <div class="detail-item">
+                                <span class="detail-label">Challenge Box</span>
+                                <span class="detail-val">BOX IDEA 2</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Vulnerability</span>
+                                <span class="detail-val">Hidden HTML Input Leak</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Status</span>
+                                <span class="detail-val text-green">Completed</span>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="resetChallenge()" class="submit-action-btn logout-action-btn" style="border:none; cursor:pointer;">
+                            <span>Logout &amp; Reset Challenge</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/dynamic-flags.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const input = document.getElementById('user-password');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                input.type = 'password';
+                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        }
+
+        document.getElementById('ctf2-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('user-password').value.trim();
+            const err = document.getElementById('error-alert');
+
+            if (u === 'admin' && p === 'CYRAKSHA2026') {
+                err.style.display = 'none';
+                try {
+                    const team = (window.CTF_FLAGS && window.CTF_FLAGS.getActiveTeamName) ? window.CTF_FLAGS.getActiveTeamName() : 'anonymous_team';
+                    const token = (window.CTF_FLAGS && window.CTF_FLAGS.getTeamToken) ? window.CTF_FLAGS.getTeamToken(team, 'ctf2') : '';
+                    const dynamicFlag = token ? `CYRAKSHA{h1dd3n_1n_pl41n_51gh7_${token}}` : 'CYRAKSHA{h1dd3n_1n_pl41n_51gh7_2026}';
+                    const flagEl = document.getElementById('flag-content');
+                    if (flagEl) flagEl.innerText = dynamicFlag;
+                } catch (e) {}
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('dashboard-view').style.display = 'grid';
+            } else {
+                err.style.display = 'flex';
+            }
+        });
+
+        function resetChallenge() {
+            document.getElementById('login-view').style.display = 'grid';
+            document.getElementById('dashboard-view').style.display = 'none';
+            document.getElementById('user-password').value = '';
+        }
+
+        function copyFlagText() {
+            const flag = document.getElementById('flag-content').innerText;
+            navigator.clipboard.writeText(flag).then(() => {
+                const label = document.getElementById('copy-label');
+                label.innerText = 'Copied!';
+                setTimeout(() => {
+                    label.innerText = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Close runner modal if opened inside parent iframe
+        document.querySelectorAll('a[href*="dashboard.html"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (window.self !== window.top) {
+                    e.preventDefault();
+                    try {
+                        window.parent.postMessage({ action: 'close_runner_modal' }, '*');
+                    } catch (err) {
+                        window.top.location.href = a.href;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

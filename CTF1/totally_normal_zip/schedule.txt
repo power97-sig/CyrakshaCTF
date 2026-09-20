@@ -1,0 +1,12 @@
+CYRAKSHA 2026 - EVENT SCHEDULE
+Date: October 14, 2026
+Venue: Main Auditorium & Cyber Labs
+
+09:00 AM - 09:30 AM : Registration and Welcome Kit Distribution
+09:30 AM - 10:30 AM : Keynote Address: Emerging Threats in Modern Infrastructure
+10:30 AM - 11:45 AM : Workshop A: Reverse Engineering and Binary Exploitation
+11:45 AM - 01:00 PM : Workshop B: Web Application Vulnerabilities & Defense
+01:00 PM - 02:00 PM : Networking Lunch
+02:00 PM - 05:00 PM : Annual Cyraksha CTF Competition
+05:00 PM - 05:30 PM : High Tea & Scoreboard Freeze
+05:30 PM - 06:30 PM : Awards Ceremony & Closing Remarks

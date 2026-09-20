@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Granted - CYRAKSHA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="hero-card">
+            <div class="hero-image-layer" style="background-image: url('{{ url_for('static', filename='images/hero.jpg') }}');"></div>
+            <div class="hero-overlay"></div>
+
+            <div class="hero-top">
+                <div class="brand-logo">
+                    <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+                        <path d="M6 24L16 6L26 24" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11 18H21" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                    <span class="logo-text">CYRAKSHA</span>
+                </div>
+                <a href="{{ url_for('logout') }}" class="back-link">
+                    <span>Logout</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="arrow-icon">
+                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="hero-bottom">
+                <h2 class="hero-title">Access Granted,<br>Flag Decrypted</h2>
+                <div class="carousel-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <div class="status-badge-wrap">
+                        <span class="status-dot-pulse"></span>
+                        <span class="status-badge-text">AUTHENTICATED AS {{ user | upper }}</span>
+                    </div>
+                    <h1 class="main-heading">Challenge Solved!</h1>
+                    <p class="sub-heading">"WAIT. The website literally gave me the password." That's a fantastic beginner CTF moment.</p>
+                </div>
+
+                <div class="flag-card-block">
+                    <div class="flag-header-row">
+                        <span class="flag-title-tag">FLAG CAPTURED</span>
+                        <span class="flag-pts-tag">+100 PTS</span>
+                    </div>
+                    <div class="flag-input-group">
+                        <code id="flag-content" class="flag-text-code">{{ flag }}</code>
+                        <button type="button" class="flag-copy-action" id="copy-btn" onclick="copyFlagText()">
+                            <svg viewBox="0 0 20 20" fill="currentColor" class="copy-svg-icon">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                            </svg>
+                            <span id="copy-label">Copy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="summary-details-card">
+                    <div class="detail-item">
+                        <span class="detail-label">Challenge Box</span>
+                        <span class="detail-val">BOX IDEA 3</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Vulnerability</span>
+                        <span class="detail-val">Hidden HTML Input Leak</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-val text-green">Completed</span>
+                    </div>
+                </div>
+
+                <a href="{{ url_for('logout') }}" class="submit-action-btn logout-action-btn">
+                    <span>Logout & Reset Challenge</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyFlagText() {
+            const flag = document.getElementById('flag-content').innerText;
+            navigator.clipboard.writeText(flag).then(() => {
+                const label = document.getElementById('copy-label');
+                label.innerText = 'Copied!';
+                setTimeout(() => {
+                    label.innerText = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
