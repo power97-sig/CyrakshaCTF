@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM BACKUP ARCHIVE // CYRAKSHA</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-terminal: #040608;
+            --amber-glow: #ffb800;
+            --amber-dim: rgba(255, 184, 0, 0.15);
+            --amber-border: rgba(255, 184, 0, 0.35);
+            --font-mono: 'Fira Code', monospace;
+            --font-heading: 'Anton', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-terminal);
+            color: #d1d5db;
+            font-family: var(--font-mono);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* CRT Scanline Overlay */
+        body::before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 2;
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        .terminal-wrapper {
+            width: 100%;
+            max-width: 620px;
+            background: #080d12;
+            border: 1px solid var(--amber-border);
+            border-radius: 8px;
+            box-shadow: 0 0 35px var(--amber-dim), 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: #0c141c;
+            border-bottom: 1px solid var(--amber-border);
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--amber-glow);
+            text-transform: uppercase;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .control-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #222e3a;
+        }
+
+        .control-dot.active { background: var(--amber-glow); box-shadow: 0 0 6px var(--amber-glow); }
+
+        .terminal-body {
+            padding: 28px 24px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .alert-badge {
+            display: inline-block;
+            background: rgba(255, 184, 0, 0.12);
+            color: var(--amber-glow);
+            border: 1px solid var(--amber-border);
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .log-line {
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
+
+        .log-prefix {
+            color: var(--amber-glow);
+            margin-right: 6px;
+        }
+
+        .secret-box {
+            margin: 22px 0;
+            padding: 16px 20px;
+            background: #04080c;
+            border: 1px dashed var(--amber-border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .secret-token {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--amber-glow);
+            letter-spacing: 2px;
+            user-select: all;
+        }
+
+        .btn-copy {
+            background: rgba(255, 184, 0, 0.15);
+            border: 1px solid var(--amber-border);
+            color: var(--amber-glow);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--amber-glow);
+            color: #000;
+        }
+
+        .terminal-footer {
+            padding: 14px 24px;
+            background: #060a0e;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .back-link {
+            color: #60a5fa;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: #93c5fd; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="terminal-wrapper">
+        <div class="terminal-header">
+            <div class="window-controls">
+                <span class="control-dot active"></span>
+                <span class="control-dot"></span>
+                <span class="control-dot"></span>
+            </div>
+            <span>ARCHIVE RETRIEVAL // EMERGENCY NODE</span>
+            <span>RESTRICTED</span>
+        </div>
+
+        <div class="terminal-body">
+            <span class="alert-badge">STATUS: DEPRECATED BACKUP RECORD</span>
+            <h1>SYSTEM BACKUP LOG</h1>
+            
+            <p class="log-line"><span class="log-prefix">[SYS_INIT]</span> Main authentication service migrated to Vault Node v2.</p>
+            <p class="log-line"><span class="log-prefix">[ARCHIVE]</span> Legacy access keys preserved for manual emergency recovery.</p>
+            <p class="log-line"><span class="log-prefix">[PAYLOAD]</span> Decoded key must be presented at the primary authentication gate:</p>
+
+            <div class="secret-box">
+                <span class="secret-token" id="backup-payload">c2hhZG93LTQ3Mjk=</span>
+                <button class="btn-copy" id="btn-copy">COPY TOKEN</button>
+            </div>
+
+            <p class="log-line" style="font-size: 11.5px; color: #6b7280;">
+                Notice: Disallow directives in robots.txt apply to external automated indexers only.
+            </p>
+        </div>
+
+        <div class="terminal-footer">
+            <span>MEM: 0xDEADBEEF // CLUSTER-7</span>
+            <a href="index.html" class="back-link">
+                <span>← Return to Vault Gate</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('btn-copy');
+        const token = document.getElementById('backup-payload');
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(token.textContent.trim()).then(() => {
+                btn.textContent = 'COPIED!';
+                setTimeout(() => { btn.textContent = 'COPY TOKEN'; }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

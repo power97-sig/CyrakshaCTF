@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHADOW VAULT — Cyraksha CTF Arena</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="arena-bg"></div>
+
+    <div class="layout-wrapper">
+        <!-- Top Navigation -->
+        <nav class="arena-nav">
+            <a href="../../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">CHALLENGE 08</span>
+            </a>
+
+            <a href="../../dashboard.html" target="_top" class="btn-back-arena">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Arena</span>
+            </a>
+        </nav>
+
+        <!-- Main Challenge Area -->
+        <main class="main-arena-content">
+            <div class="challenge-container">
+                <div class="card-top-tag">WEB / RECONNAISSANCE &amp; BACKUP</div>
+
+                <div class="vault-header-block">
+                    <div class="vault-icon-shield">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            <circle cx="12" cy="16" r="1.5" fill="currentColor"></circle>
+                        </svg>
+                        <div class="shield-pulse-ring"></div>
+                    </div>
+                    <div class="system-status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">NODE STATUS: ACTIVE // PORT 3000</span>
+                    </div>
+                </div>
+
+                <h1 class="challenge-title">SHADOW VAULT</h1>
+                <p class="challenge-desc">
+                    Restricted cryptographic safe node. Authentication credentials required to decrypt confidential payloads. Decommissioned reference backups may be archived within system paths.
+                </p>
+
+                <!-- Key Submission Form -->
+                <div class="vault-auth-box">
+                    <div class="input-wrap">
+                        <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 2l-2 2m-1.5 1.5L14 9m-2 2l-2 2a4.95 4.95 0 0 1-7 0 4.95 4.95 0 0 1 0-7 4.95 4.95 0 0 1 7 0l2 2"></path>
+                        </svg>
+                        <input id="key" type="text" placeholder="Enter vault access key..." autocomplete="off" spellcheck="false">
+                    </div>
+
+                    <button id="unlock" class="action-button">
+                        <span class="btn-text">UNLOCK VAULT</span>
+                        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Decryption Result Display -->
+                <div id="result" class="result-display hidden"></div>
+
+                <!-- System Telemetry Footer -->
+                <div class="telemetry-bar">
+                    <span class="telemetry-item">ENC: AES-GCM-256</span>
+                    <span class="telemetry-dot">•</span>
+                    <span class="telemetry-item">ACCESS: LEVEL-4</span>
+                    <span class="telemetry-dot">•</span>
+                    <span class="telemetry-item">CRAWLER DIRECTIVES: ACTIVE</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/dynamic-flags.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

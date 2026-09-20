@@ -1,0 +1,418 @@
+/* ==========================================================================
+   CYRAKSHA CTF ARENA — CHALLENGE 08: SHADOW VAULT DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+    --bg-dark: #05070a;
+    --card-bg: #0d1117;
+    --card-bg-elevated: #131923;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 42, 64, 0.4);
+    
+    --brand-red: #ff2a40;
+    --brand-red-light: #ff4d61;
+    --brand-red-glow: rgba(255, 42, 64, 0.25);
+
+    --accent-green: #00ff9d;
+    --accent-green-glow: rgba(0, 255, 157, 0.2);
+
+    --text-main: #ffffff;
+    --text-muted: #8b949e;
+    --text-dim: #484f58;
+
+    --font-heading: 'Anton', 'Bebas Neue', sans-serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fira Code', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ambient Background */
+.arena-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: 
+        radial-gradient(circle at 50% 20%, rgba(255, 42, 64, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 157, 0.03) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.layout-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Navigation */
+.arena-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 28px;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.brand-m {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--brand-red);
+    letter-spacing: -1px;
+}
+
+.brand-dot {
+    font-size: 24px;
+    color: var(--brand-red);
+}
+
+.brand-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    margin-left: 2px;
+}
+
+.brand-arena-badge {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    background: rgba(255, 42, 64, 0.12);
+    color: var(--brand-red-light);
+    border: 1px solid rgba(255, 42, 64, 0.35);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    letter-spacing: 0.5px;
+}
+
+.btn-back-arena {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    padding: 7px 14px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-back-arena:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Main Arena Content */
+.main-arena-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Challenge Container Card */
+.challenge-container {
+    width: 100%;
+    max-width: 560px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 36px 32px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.challenge-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--brand-red), transparent);
+}
+
+.card-top-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand-red-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Vault Header Block */
+.vault-header-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.vault-icon-shield {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: rgba(255, 42, 64, 0.08);
+    border: 1px solid rgba(255, 42, 64, 0.25);
+    color: var(--brand-red-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shield-pulse-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    border: 1px solid var(--brand-red);
+    opacity: 0.3;
+    animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.4; }
+    50% { transform: scale(1.05); opacity: 0.1; }
+    100% { transform: scale(0.95); opacity: 0.4; }
+}
+
+.system-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0, 255, 157, 0.06);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px var(--accent-green);
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.status-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent-green);
+    letter-spacing: 0.5px;
+}
+
+/* Typography */
+.challenge-title {
+    font-family: var(--font-heading);
+    font-size: 38px;
+    letter-spacing: 1.5px;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.1;
+}
+
+.challenge-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+/* Vault Auth Form */
+.vault-auth-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-dim);
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.input-wrap input {
+    width: 100%;
+    background: rgba(5, 7, 10, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 14px 14px 14px 42px;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    letter-spacing: 0.5px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-wrap input:focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px var(--brand-red-glow);
+}
+
+.input-wrap input:focus + .input-icon {
+    color: var(--brand-red-light);
+}
+
+.action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 20px;
+    background: var(--brand-red);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(255, 42, 64, 0.3);
+}
+
+.action-button:hover:not(:disabled) {
+    background: var(--brand-red-light);
+    box-shadow: 0 6px 22px rgba(255, 42, 64, 0.45);
+    transform: translateY(-1px);
+}
+
+.action-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Decryption Result Display */
+.result-display {
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    word-break: break-all;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.result-display.hidden {
+    display: none;
+}
+
+.result-display.error {
+    background: rgba(255, 42, 64, 0.08);
+    border: 1px solid rgba(255, 42, 64, 0.3);
+    color: #ff6b7e;
+}
+
+.result-display.success {
+    background: rgba(0, 255, 157, 0.08);
+    border: 1px solid rgba(0, 255, 157, 0.35);
+    color: #00ff9d;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.15);
+}
+
+.flag-output-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: #00ff9d;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.flag-output-code {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px dashed rgba(0, 255, 157, 0.3);
+    color: #fff;
+    font-weight: 700;
+    margin-top: 6px;
+    user-select: all;
+}
+
+/* Telemetry Bar Footer */
+.telemetry-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    padding-top: 18px;
+    border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.telemetry-dot {
+    color: var(--border-color);
+}
