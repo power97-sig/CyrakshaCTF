@@ -1,0 +1,14 @@
+{
+  "name": "cyraksha-notes-ctf",
+  "version": "1.0.0",
+  "description": "Cyraksha Notes - Web Session Tampering CTF Challenge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.2",
+    "serverless-http": "^4.0.0"
+  }
+}
