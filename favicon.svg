@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+  <!-- Bold Condensed M -->
+  <path d="M11 51V13h8.5l11 17.5L41.5 13H50v38h-8V25.5L32 39h-2L20 25.5V51H11z" fill="#ffffff"/>
+  <!-- Crimson Red Square Dot -->
+  <rect x="48.5" y="42" width="9" height="9" rx="2" fill="#d90429"/>
+</svg>

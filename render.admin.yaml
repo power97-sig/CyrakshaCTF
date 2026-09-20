@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cyraksha-ctf-admin-portal
+    env: docker
+    dockerfilePath: Dockerfile.admin
+    plan: free
+    region: oregon
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ADMIN_MASTER_KEY
+        value: CYRAKSHA_ADMIN_2026

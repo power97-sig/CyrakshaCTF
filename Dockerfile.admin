@@ -1,0 +1,21 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy dependency definition
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm install --production
+
+# Copy all workspace files
+COPY . ./
+
+# Expose Admin Port
+ENV PORT=8080
+ENV NODE_ENV=production
+ENV ADMIN_MASTER_KEY=CYRAKSHA_ADMIN_2026
+
+EXPOSE 8080
+
+CMD ["node", "server.js"]

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split-Brain Protocol — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div class="app-layout">
+        <!-- Top Navigation Header -->
+        <header class="navbar">
+            <a href="../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">DUO BOX 06</span>
+            </a>
+            
+            <div class="nav-stats">
+                <div class="stat-pill">
+                    <span class="stat-label">CATEGORY</span>
+                    <span class="stat-val category-badge">DUO HYBRID</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">MAX POINTS</span>
+                    <span class="stat-val points-badge">1000 PTS</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">CURRENT YIELD</span>
+                    <span class="stat-val current-points" id="nav-current-pts">1000 PTS</span>
+                </div>
+                <div class="stat-pill status-pill">
+                    <span class="status-dot"></span>
+                    <span class="stat-val" id="challenge-status-text">UNSOLVED</span>
+                </div>
+                <a href="../dashboard.html" target="_top" class="btn-back-arena">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Back to Arena</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Challenge Content -->
+        <main class="main-content">
+            <!-- Hero Header -->
+            <section class="challenge-hero">
+                <div class="challenge-header-top">
+                    <div class="box-tag">BOX 07</div>
+                    <div class="difficulty-rating">
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-text">Hard Difficulty • Duo Team Operation</span>
+                    </div>
+                </div>
+                <h1 class="challenge-title">SPLIT-BRAIN PROTOCOL</h1>
+                <p class="challenge-subtitle">Dual-track converged operation: exploit SSRF on Port 8000, reverse the Feistel cipher daemon on Port 9000, and race the 15-second heartbeat alarm.</p>
+            </section>
+
+            <!-- Two-Column CTF Layout -->
+            <div class="grid-container">
+                
+                <!-- Left Column: Challenge Description & Tools -->
+                <div class="left-column">
+                    <div class="card mission-card">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-header-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                </div>
+                                <h2>Challenge Description</h2>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="briefing-box">
+                                <div class="briefing-title">Split-Brain Operation</div>
+                                <p class="briefing-line"><strong>Track 1 (Player 1):</strong> Blind SSRF & heap memory dump on Port 8000.</p>
+                                <p class="briefing-line"><strong>Track 2 (Player 2):</strong> Reverse stripped x86-64 TCP daemon on Port 9000.</p>
+                                <p class="briefing-line highlight-line">Both tracks must cross-pollinate to authenticate the daemon.</p>
+                                <p class="briefing-line action-line">Hold the 15s keepalive alarm to capture the root flag.</p>
+                            </div>
+
+                            <!-- Target Artifact Box -->
+                            <div class="target-artifact-box">
+                                <div class="artifact-preview">
+                                    <img src="../images/boxes/box_ctf6.jpg" alt="Split-Brain Protocol" onerror="this.src='../images/boxes/box_ctf5.jpg'" class="thumbnail-img">
+                                </div>
+                                <div class="artifact-info">
+                                    <div class="artifact-filename">split_brain_protocol.bin</div>
+                                    <div class="artifact-meta">
+                                        <span>x86-64 Stripped ELF</span>
+                                        <span>•</span>
+                                        <span>Port 8000 &amp; 9000</span>
+                                        <span>•</span>
+                                        <span>Duo Challenge</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Keepalive Beacon Section for Player 1 -->
+                            <div class="beacon-control-box">
+                                <div class="beacon-title">
+                                    <span>📡</span>
+                                    <span>PHASE 3 KEEP-ALIVE BEACON (PLAYER 1)</span>
+                                </div>
+                                <p class="beacon-desc">
+                                    When Player 2 connects to Port 9000, fire this authenticated keepalive request every 15 seconds to hold the daemon socket open.
+                                </p>
+                                <button class="btn btn-emerald" id="btn-keepalive" style="width: 100%;">
+                                    <span>SEND /api/v1/keepalive BEACON PING</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Workbench -->
+                <div class="right-column">
+                    <div class="card workbench-card">
+                        
+                        <!-- Workbench Top Bar with Tabs and MacOS Dots -->
+                        <div class="workbench-nav-header">
+                            <div class="tab-buttons-group">
+                                <button class="tab-btn active" id="tab-web">
+                                    <span>🌐</span>
+                                    <span>Track 1: Web Exploitation (Port 8000)</span>
+                                </button>
+                                <button class="tab-btn tab-cyan" id="tab-reversing">
+                                    <span>⚙️</span>
+                                    <span>Track 2: Protocol Reversing (Port 9000)</span>
+                                </button>
+                                <button class="tab-btn tab-emerald" id="tab-convergence">
+                                    <span>⚡</span>
+                                    <span>Phase 3: Convergence Console</span>
+                                </button>
+                            </div>
+                            <div class="window-dots">
+                                <span class="w-dot w-red"></span>
+                                <span class="w-dot w-yellow"></span>
+                                <span class="w-dot w-green"></span>
+                            </div>
+                        </div>
+
+                        <!-- 
+                            ===================================================================
+                            [INTERNAL DEVELOPER NOTICE - CONFIDENTIAL]
+                            Architecture Note: Web Microservice routes exposed on Port 8000:
+                              • POST /api/v1/invoice/render (Public PDF invoice generator)
+                              • POST /api/v1/keepalive      (Convergence Heartbeat Listener)
+                              • GET  /api/internal/debug/dump-heap (Diagnostic Memory Heap Dump)
+                            Security Policy: Loopback regex filters active for '127.0.0.1' and 'localhost'.
+                            ===================================================================
+                        -->
+
+                        <!-- PANEL 1: Track 1 - Web Exploitation (Invoice SSRF & Heap Dump) -->
+                        <div id="panel-web" class="panel-container">
+                            
+                            <!-- Invoice Generator Section -->
+                            <div class="sub-panel">
+                                <div class="sub-panel-title">
+                                    <span>INVOICE PDF GENERATOR (HEADLESS CHROMIUM BOT)</span>
+                                    <span style="color: var(--accent-cyan); font-size: 0.75rem;">HTTP/1.1 :8000</span>
+                                </div>
+                                <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 12px;">
+                                    The internal web microservice takes an HTML invoice URL or file URI and renders a server-side PDF. Standard loopback targets like <code>127.0.0.1</code> and <code>localhost</code> are filtered by security regex.
+                                </p>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="invoice-url-input">
+                                        <span>INVOICE TEMPLATE URL / SSRF PAYLOAD</span>
+                                        <span style="color: var(--text-muted);">Loopback Filters Active</span>
+                                    </label>
+                                    <input type="text" class="input-text" id="invoice-url-input" value="https://templates.cyraksha.internal/invoices/client_billing_v1.html" placeholder="https://example.com/invoice.html or internal service URL...">
+                                </div>
+
+                                <button class="btn btn-red" id="btn-render-invoice" style="width: 100%;">
+                                    <span>RENDER PDF / PROCESS TEMPLATE →</span>
+                                </button>
+                            </div>
+
+                            <!-- Memory Heap Inspector Section -->
+                            <div class="sub-panel">
+                                <div class="sub-panel-title">
+                                    <span>RUNTIME MEMORY DUMP &amp; HEAP INSPECTOR</span>
+                                    <span style="color: var(--accent-green); font-size: 0.75rem;">LIVE KERNEL PROBE</span>
+                                </div>
+                                
+                                <div class="terminal-console" id="web-console">[*] Cyraksha PDF Invoice Microservice v2.6.0 online.
+[*] Headless Chromium renderer active on internal port 8000.
+[*] SSRF security policy enforced: Loopback (127.0.0.1, localhost) blocked.
+[*] Awaiting rendering requests...</div>
+
+                                <div class="secret-result-box">
+                                    <div class="secret-label">EXTRACTED 32-BYTE SESSION SECRET:</div>
+                                    <div class="secret-value" id="extracted-secret-display">[AWAITING HEAP EXTRACTION]</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- PANEL 2: Track 2 - Binary Reverse Engineering (Feistel Cipher Lab) -->
+                        <div id="panel-reversing" class="panel-container hidden">
+                            
+                            <!-- Ghidra Decompiler View -->
+                            <div class="sub-panel">
+                                <div class="sub-panel-title">
+                                    <span>GHIDRA DECOMPILER: protocol_bridge (Port 9000)</span>
+                                    <span style="color: var(--accent-amber); font-size: 0.75rem;">x86-64 ELF STRIPPED</span>
+                                </div>
+                                <div class="code-viewer">
+<span class="asm-comment">// ========================================================</span>
+<span class="asm-comment">// Disassembly: protocol_bridge::process_incoming_packet()</span>
+<span class="asm-comment">// ========================================================</span>
+
+<span class="asm-keyword">#define</span> <span class="asm-val">MAGIC_HEADER</span> <span class="asm-val">0x53504C54</span> <span class="asm-comment">// "SPLT"</span>
+
+<span class="asm-keyword">typedef struct</span> {
+    <span class="asm-keyword">uint32_t</span> magic;       <span class="asm-comment">// 0x53504C54 ('SPLT')</span>
+    <span class="asm-keyword">uint8_t</span>  iv[<span class="asm-val">16</span>];      <span class="asm-comment">// Random 16-byte initialization vector</span>
+    <span class="asm-keyword">uint32_t</span> timestamp;   <span class="asm-comment">// Unix epoch timestamp</span>
+    <span class="asm-keyword">uint8_t</span>  payload[<span class="asm-val">64</span>]; <span class="asm-comment">// Feistel-encrypted auth payload</span>
+} <span class="asm-func">__attribute__</span>((packed)) <span class="asm-keyword">Packet_t</span>;
+
+<span class="asm-keyword">int</span> <span class="asm-func">validate_packet</span>(<span class="asm-keyword">Packet_t</span> *pkt, <span class="asm-keyword">uint8_t</span> *session_key) {
+    <span class="asm-keyword">if</span> (pkt-&gt;magic != <span class="asm-val">MAGIC_HEADER</span>) <span class="asm-keyword">return</span> <span class="asm-val">-1</span>;
+
+    <span class="asm-comment">// 4-Round Feistel Block Cipher Decryption</span>
+    <span class="asm-keyword">uint32_t</span> L = *(<span class="asm-keyword">uint32_t</span>*)&amp;pkt-&gt;payload[<span class="asm-val">0</span>];
+    <span class="asm-keyword">uint32_t</span> R = *(<span class="asm-keyword">uint32_t</span>*)&amp;pkt-&gt;payload[<span class="asm-val">4</span>];
+
+    <span class="asm-keyword">for</span> (<span class="asm-keyword">int</span> round = <span class="asm-val">3</span>; round &gt;= <span class="asm-val">0</span>; round--) {
+        <span class="asm-keyword">uint32_t</span> k = *(<span class="asm-keyword">uint32_t</span>*)&amp;session_key[(round * <span class="asm-val">4</span>) % <span class="asm-val">32</span>];
+        <span class="asm-keyword">uint32_t</span> F = (((L &lt;&lt; <span class="asm-val">3</span>) | (L &gt;&gt; <span class="asm-val">29</span>)) ^ k ^ <span class="asm-val">0x5A5A5A5A</span>);
+        <span class="asm-keyword">uint32_t</span> prevL = R ^ F;
+        R = L;
+        L = prevL;
+    }
+
+    <span class="asm-comment">// Check if decrypted payload matches "AUTH_ROOT_DEBUG:&lt;SESSION_KEY&gt;"</span>
+    <span class="asm-keyword">if</span> (<span class="asm-func">memcmp</span>(pkt-&gt;payload, <span class="asm-val">"AUTH_ROOT_DEBUG"</span>, <span class="asm-val">15</span>) == <span class="asm-val">0</span>) {
+        <span class="asm-func">alarm</span>(<span class="asm-val">15</span>); <span class="asm-comment">// 15-second anti-tamper heartbeat active</span>
+        <span class="asm-keyword">return</span> <span class="asm-func">spawn_root_console</span>();
+    }
+    <span class="asm-keyword">return</span> <span class="asm-val">-2</span>;
+}</div>
+                            </div>
+
+                            <!-- Packet Crafting Lab -->
+                            <div class="sub-panel">
+                                <div class="sub-panel-title">
+                                    <span>PACKET ASSEMBLER &amp; FEISTEL CRYPTO LAB</span>
+                                    <span style="color: var(--accent-cyan); font-size: 0.75rem;">PORT 9000 CLIENT</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="secret-input">
+                                        <span>SESSION SECRET KEY (FROM TRACK 1)</span>
+                                        <span style="color: var(--accent-cyan);">32-BYTE HEX</span>
+                                    </label>
+                                    <input type="text" class="input-text" id="secret-input" placeholder="Paste 32-byte session secret from Player 1...">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="command-input">AUTH COMMAND STRING</label>
+                                    <input type="text" class="input-text" id="command-input" value="AUTH_ROOT_DEBUG">
+                                </div>
+
+                                <button class="btn btn-cyan" id="btn-craft-packet" style="width: 100%; margin-bottom: 12px;">
+                                    <span>⚡ ASSEMBLE FEISTEL PACKET</span>
+                                </button>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="packet-hex-output">PACKED BINARY HEX PAYLOAD</label>
+                                    <textarea class="input-textarea" id="packet-hex-output" readonly placeholder="[Crafted packet will appear here in raw hex]"></textarea>
+                                </div>
+
+                                <button class="btn btn-emerald" id="btn-send-to-daemon" style="width: 100%;">
+                                    <span>🚀 TRANSMIT TO DAEMON (ENTER PHASE 3 CONVERGENCE)</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- PANEL 3: Phase 3 - Convergence Console (Port 9000 & Heartbeat Alarm) -->
+                        <div id="panel-convergence" class="panel-container hidden">
+                            
+                            <!-- Heartbeat Race Condition Status HUD -->
+                            <div class="race-timer-box">
+                                <div style="flex: 1;">
+                                    <span class="stat-label" style="color: var(--accent-red);">ANTI-TAMPER WATCHDOG HEARTBEAT:</span>
+                                    <h3 id="convergence-notice" style="font-size: 0.95rem; color: var(--text-primary); margin: 2px 0;">Awaiting initial daemon authentication packet...</h3>
+                                    <div class="heartbeat-progress">
+                                        <div class="heartbeat-bar" id="heartbeat-bar"></div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right; min-width: 140px;">
+                                    <div class="stat-label">ALARM(15) REMAINING</div>
+                                    <div class="race-timer-display" id="race-timer-display">15.0s</div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Raw TCP Socket Console -->
+                            <div class="sub-panel">
+                                <div class="sub-panel-title">
+                                    <span>RAW TCP DEBUG TERMINAL :9000 (PID 31337)</span>
+                                    <span style="color: var(--accent-green); font-size: 0.75rem;">ROOT INTERACTIVE SHELL</span>
+                                </div>
+                                
+                                <div class="terminal-console" id="socket-console" style="min-height: 220px; max-height: 320px;">[DAEMON] Split-Brain Protocol Bridge v2.6.0 initialized on tcp://0.0.0.0:9000.
+[DAEMON] Awaiting authenticated binary packet with magic 0x53504C54 ('SPLT')...</div>
+
+                                <div style="display: flex; gap: 10px; margin-top: 14px;">
+                                    <input type="text" class="input-text" id="cmd-socket-input" placeholder="cat /root/flag.txt" style="flex: 1;">
+                                    <button class="btn btn-emerald" id="btn-send-cmd">
+                                        <span>EXECUTE COMMAND</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Victory Flag Card -->
+                            <div class="flag-capture-card hidden" id="flag-capture-card">
+                                <h2 style="color: var(--accent-green); letter-spacing: 1px; font-family: var(--font-heading); font-size: 28px;">⚡ SPLIT-BRAIN CONVERGENCE COMPLETE! ⚡</h2>
+                                <p style="color: var(--text-secondary); margin-top: 4px; font-size: 0.9rem;">You successfully bypassed the SSRF filter, extracted the runtime heap key, derived the Feistel cipher, and raced the 15-second heartbeat alarm!</p>
+                                <div class="flag-box" id="root-flag-display"></div>
+                                <br>
+                                <button class="btn btn-emerald" id="btn-copy-flag">
+                                    <span>📋 COPY ROOT FLAG</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast-popup hidden"></div>
+
+    <script src="../js/dynamic-flags.js?v=20260901_v1"></script>
+    <script src="js/app.js?v=20260901_v1"></script>
+</body>
+</html>

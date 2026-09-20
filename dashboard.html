@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF ARENA — Hackathon Contest Hub</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="arena-bg"></div>
+
+    <div class="arena-layout">
+        
+        <!-- TOP NAVIGATION -->
+        <nav class="arena-nav">
+            <!-- Brand Logo -->
+            <a href="dashboard.html" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+            </a>
+
+            <!-- Center Navigation Tabs -->
+            <div class="nav-tabs-center">
+                <button class="nav-tab-link active" id="tab-btn-boxes" data-target="tab-pane-boxes">BOXES</button>
+                <button class="nav-tab-link" id="tab-btn-leaderboard" data-target="tab-pane-leaderboard">LEADERBOARD</button>
+            </div>
+
+            <!-- User Stats & Score Badge -->
+            <div class="nav-user-stats">
+                <button class="btn-give-up" id="btn-give-up" title="Give Up & Conclude Contest">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                    <span id="give-up-btn-text">Give Up</span>
+                </button>
+
+                <div class="team-profile-pill">
+                    <span class="team-pill-name" id="nav-team-name">Team Name</span>
+                    <span class="team-mode-badge" id="nav-team-mode">TEAM</span>
+                </div>
+
+                <div class="score-badge-block">
+                    <div class="score-badge-icon">🏆</div>
+                    <div class="score-badge-text">
+                        <span class="score-badge-label">TOTAL POINTS</span>
+                        <span class="score-badge-digits" id="live-score-digits">0 / 2700</span>
+                    </div>
+                </div>
+
+                <button class="btn-nav-logout" id="btn-logout" title="Sign Out">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- ========================================================
+             TAB 1: ALL BOXES (CHALLENGES VIEW)
+             ======================================================== -->
+        <section id="tab-pane-boxes" class="tab-content-pane active">
+            
+            <!-- Header Section -->
+            <header class="arena-header-section">
+                <div class="header-title-wrap">
+                    <h1>ALL BOXES<span class="asterisk">*</span></h1>
+                    <p>Solve challenges. Earn points. Climb the leaderboard.</p>
+                </div>
+
+                <div class="header-metric-wrap">
+                    <span class="metric-label-vertical">BOXES AVAILABLE</span>
+                    <div class="metric-number-display">
+                        <span class="divider">|</span>
+                        <span id="header-available-count">07</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Challenges Grid (2 Rows x 3 Cols) -->
+            <main class="challenges-grid">
+
+                <!-- BOX 01: The Liar Button -->
+                <article class="challenge-box-card" id="card-ctf0">
+                    <div class="card-header-bar">
+                        <span class="box-number">#01</span>
+                        <span class="box-points-tag" id="tag-pts-ctf0">200 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf0.jpg" alt="The Liar Button">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web / DOM Inspection</span>
+                        <h3 class="card-challenge-title">THE LIAR BUTTON<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">A button claims to give the flag, but triggers a deceptive prompt. Inspect the underlying code to uncover the real secret.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf0">
+                            <span>OPEN BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf0" placeholder="flag{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf0">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf0"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 02: Cyraksha Challenge Hub -->
+                <article class="challenge-box-card" id="card-ctf1">
+                    <div class="card-header-bar">
+                        <span class="box-number">#02</span>
+                        <span class="box-points-tag" id="tag-pts-ctf1">200 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf1.jpg" alt="Cyraksha Challenge Hub">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web &amp; Forensics</span>
+                        <h3 class="card-challenge-title">THE HIDDEN TRUTH<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">Nothing is ever what it seems. Uncover the truth buried beneath DOM layers or inspect hidden zip archive forensics.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf1">
+                            <span>OPEN BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf1" placeholder="flag{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf1">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf1"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 03: CYRAKSHA Sign In -->
+                <article class="challenge-box-card" id="card-ctf2">
+                    <div class="card-header-bar">
+                        <span class="box-number">#03</span>
+                        <span class="box-points-tag" id="tag-pts-ctf2">200 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf2.jpg" alt="CYRAKSHA Sign In">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web / Hidden Recon</span>
+                        <h3 class="card-challenge-title">ACCESS DENIED<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">The gate is locked, but every system has a flaw. Find the client-side credential artifact to authenticate into the console.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf2">
+                            <span>OPEN BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf2" placeholder="CYRAKSHA{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf2">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf2"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 04: Gateway Auth Level 1 -->
+                <article class="challenge-box-card" id="card-ctf3">
+                    <div class="card-header-bar">
+                        <span class="box-number">#04</span>
+                        <span class="box-points-tag" id="tag-pts-ctf3">200 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf3.jpg" alt="Gateway Auth Level 1">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web / Metadata Clues</span>
+                        <h3 class="card-challenge-title">CODE BREAKER<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">Break the code. Logic and curiosity will get you in. Inspect page metadata and subtle clues to decrypt the gateway key.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf3">
+                            <span>OPEN BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf3" placeholder="FLAG{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf3">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf3"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 05: The Hidden Message (Steganography) -->
+                <article class="challenge-box-card" id="card-ctf4">
+                    <div class="card-header-bar">
+                        <span class="box-number">#05</span>
+                        <span class="box-points-tag" id="tag-pts-ctf4">200 PTS MAX</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf4.jpg" alt="The Hidden Message">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Steganography / Terminal</span>
+                        <h3 class="card-challenge-title">PIECE BY PIECE<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">Put the pieces together. The bigger picture is the key. Inspect the secret carrier file inside the terminal environment.</p>
+
+                        <!-- Hint Accordion -->
+                        <div class="hint-accordion">
+                            <div class="hint-accordion-title">
+                                <span>HINT SYSTEM</span>
+                                <span style="color: var(--brand-red);">200 PTS BASE</span>
+                            </div>
+                            <div class="hint-buttons-row">
+                                <button class="hint-btn-pill" id="unlock-hint-btn-1">
+                                    <span id="hint-text-1">Hint 1 (Free) — Locked</span>
+                                    <span style="font-weight:700;">[UNLOCK]</span>
+                                </button>
+                                <button class="hint-btn-pill" id="unlock-hint-btn-2">
+                                    <span id="hint-text-2">Hint 2 (-10 pts) — Locked</span>
+                                    <span style="font-weight:700;">[-10 PTS]</span>
+                                </button>
+                                <button class="hint-btn-pill" id="unlock-hint-btn-3">
+                                    <span id="hint-text-3">Hint 3 (-20 pts) — Locked</span>
+                                    <span style="font-weight:700;">[-20 PTS]</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf4">
+                            <span>OPEN TERMINAL BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf4" placeholder="flag{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf4">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf4"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 06: Cyraksha Notes (IDOR Boss Box) -->
+                <article class="challenge-box-card" id="card-ctf5">
+                    <div class="card-header-bar">
+                        <span class="box-number">#06</span>
+                        <span class="box-points-tag" style="background: rgba(217,4,41,0.1); border-color: rgba(217,4,41,0.3); color: var(--brand-red);" id="tag-pts-ctf5">500 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf5.jpg" alt="Cyraksha Notes">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web / Broken Access Control</span>
+                        <h3 class="card-challenge-title">FINAL LOCK<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">The final challenge stands between you and the flag. Exploit client-side cookie validation to access root vault credentials.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf5">
+                            <span>OPEN BOSS BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf5" placeholder="CYRAKSHA{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf5">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf5"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 07: Split-Brain Protocol (Duo Grandmaster Box) -->
+                <article class="challenge-box-card" id="card-ctf6">
+                    <div class="card-header-bar">
+                        <span class="box-number">#07</span>
+                        <span class="box-points-tag" style="background: rgba(0,255,157,0.1); border-color: rgba(0,255,157,0.3); color: #00ff9d;" id="tag-pts-ctf6">1000 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf6.jpg" alt="Split-Brain Protocol" onerror="this.src='images/boxes/box_ctf5.jpg'">
+                        <div class="card-red-accent-notch" style="background: #00ff9d;"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Duo Hybrid / Web + Reversing + Crypto</span>
+                        <h3 class="card-challenge-title">SPLIT-BRAIN PROTOCOL<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">A high-intensity dual-workstream operation: Web heap memory dump via SSRF on Port 8000, Feistel cipher binary reversing on Port 9000, and a 15-second heartbeat race condition.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf6" style="border-color: rgba(0,255,157,0.4);">
+                            <span>OPEN DUO BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf6" placeholder="CYRAKSHA{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf6" style="background: #00ff9d; color: #000;">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf6"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX 08: Shadow Vault (CTF7) -->
+                <article class="challenge-box-card" id="card-ctf7">
+                    <div class="card-header-bar">
+                        <span class="box-number">#08</span>
+                        <span class="box-points-tag" id="tag-pts-ctf7">200 PTS</span>
+                    </div>
+                    <div class="card-image-wrap">
+                        <img src="images/boxes/box_ctf7.jpg" alt="Shadow Vault" onerror="this.src='images/boxes/box_ctf5.jpg'">
+                        <div class="card-red-accent-notch"></div>
+                    </div>
+                    <div class="card-body-content">
+                        <span class="card-challenge-category">Web / Reconnaissance &amp; Backup</span>
+                        <h3 class="card-challenge-title">SHADOW VAULT<span class="red-star">*</span></h3>
+                        <p class="card-challenge-desc">A restricted vault authentication service. Investigate web crawler directives and backup endpoints to uncover the decommissioned access credentials.</p>
+                        
+                        <button class="btn-open-box" id="btn-launch-ctf7">
+                            <span>OPEN BOX</span>
+                            <span>→</span>
+                        </button>
+
+                        <div class="flag-form-wrap">
+                            <div class="flag-input-group">
+                                <input type="text" class="flag-text-input" id="flag-input-ctf7" placeholder="CTF{...}">
+                                <button class="btn-flag-submit" id="btn-submit-ctf7">SUBMIT</button>
+                            </div>
+                            <div class="flag-status-msg" id="msg-ctf7"></div>
+                        </div>
+                    </div>
+                </article>
+
+            </main>
+
+            <!-- Bottom Slogan Banner -->
+            <div class="slogan-banner-card">
+                <div class="banner-left-wrap">
+                    <div class="crosshair-red-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                    </div>
+                    <div class="slogan-text-block">
+                        <span class="slogan-top">EVERY BOX. EVERY POINT.</span>
+                        <span class="slogan-bottom">EVERY STEP CLOSER.</span>
+                    </div>
+                </div>
+
+                <button class="btn-banner-action" id="btn-scorecard">
+                    <span>VIEW FINAL SCORECARD</span>
+                    <span>→</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- ========================================================
+             TAB 2: LIVE LEADERBOARD VIEW
+             ======================================================== -->
+        <section id="tab-pane-leaderboard" class="tab-content-pane">
+            
+            <header class="arena-header-section">
+                <div class="header-title-wrap">
+                    <h1>LIVE LEADERBOARD<span class="asterisk">*</span></h1>
+                    <p>Real-time contest rankings, solve matrices, and elapsed tiebreakers.</p>
+                </div>
+
+                <div class="leaderboard-live-pill">
+                    <span class="live-pulse-dot"></span>
+                    <span>LIVE STANDINGS</span>
+                </div>
+            </header>
+
+            <div class="leaderboard-container">
+                <div class="leaderboard-header-row">
+                    <h2 class="leaderboard-title">CONTEST RANKINGS</h2>
+                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">Auto-refreshes every 15s</span>
+                </div>
+
+                <div class="leaderboard-table-wrap">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">RANK</th>
+                                <th>TEAM NAME</th>
+                                <th>STATUS</th>
+                                <th>DIVISION</th>
+                                <th>SOLVED BOXES</th>
+                                <th>SCORE</th>
+                                <th>TIME ELAPSED</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">Loading contest standings...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="arena-footer">
+            <div class="footer-brand">
+                © 2026 <span>CYRAKSHA</span> | CTF PLATFORM
+            </div>
+            <div>
+                ALL RIGHTS RESERVED
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Suspension Lockout Overlay -->
+    <div class="modal-overlay" id="suspension-overlay" style="z-index: 99999; backdrop-filter: blur(14px); background: rgba(5, 5, 10, 0.92);">
+        <div class="modal-content-box suspension-lockout-box" style="max-width: 580px; border: 2px solid #ff2238; box-shadow: 0 0 50px rgba(255, 34, 56, 0.35); padding: 0; overflow: hidden; background: #0a0a0e;">
+            <div style="background: linear-gradient(135deg, rgba(255,34,56,0.2) 0%, rgba(255,34,56,0.05) 100%); border-bottom: 1px solid rgba(255,34,56,0.3); padding: 24px; text-align: center;">
+                <div style="font-size: 42px; line-height: 1; margin-bottom: 12px; filter: drop-shadow(0 0 16px rgba(255,34,56,0.6));">⛔</div>
+                <h2 style="font-family: var(--font-display); font-size: 26px; color: #ff334b; letter-spacing: 0.05em; margin: 0 0 6px 0;">ACCOUNT TEMPORARILY SUSPENDED</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 0; font-family: var(--font-sans);">A contest administrator has placed a temporary lockout on your team.</p>
+            </div>
+
+            <div style="padding: 28px;">
+                <div style="background: rgba(255, 34, 56, 0.06); border-left: 3px solid #ff2238; border-radius: 4px; padding: 14px 16px; margin-bottom: 24px;">
+                    <div style="font-size: 10.5px; font-family: var(--font-mono); font-weight: 800; color: #ff6b7d; letter-spacing: 0.06em; margin-bottom: 6px;">ARBITER'S REASON / EXPLANATION:</div>
+                    <div id="suspension-reason-text" style="font-size: 14px; color: #f8fafc; line-height: 1.5; font-style: italic;">
+                        "Temporary suspension applied by contest arbiters."
+                    </div>
+                </div>
+
+                <div style="background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 11px; font-family: var(--font-mono); font-weight: 800; color: var(--text-muted); letter-spacing: 0.08em;">TIME REMAINING UNTIL UNLOCK</div>
+                    <div id="suspension-countdown-timer" style="font-family: var(--font-display); font-size: 48px; color: #ff334b; letter-spacing: 0.08em; margin-top: 6px; text-shadow: 0 0 20px rgba(255,34,56,0.5);">
+                        15:00
+                    </div>
+                    <div style="font-size: 11px; font-family: var(--font-mono); color: #64748b; margin-top: 4px;">
+                        Status will automatically unlock when timer expires.
+                    </div>
+                </div>
+
+                <div style="font-size: 11.5px; color: var(--text-muted); text-align: center; font-family: var(--font-mono); line-height: 1.4;">
+                    Flag submissions and point updates are locked during this suspension window.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded Challenge Modal Runner -->
+    <div class="modal-overlay" id="runner-modal">
+        <div class="modal-content-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="runner-modal-title">Challenge Runner</h3>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <a id="runner-newtab-btn" href="#" target="_blank" class="btn-flag-submit" style="text-decoration:none; display:flex; align-items:center; gap:4px;">
+                        <span>Open In New Tab</span>
+                        <span>↗</span>
+                    </a>
+                    <button class="btn-close-modal" id="close-runner-modal">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 0;">
+                <iframe id="runner-iframe" class="runner-frame" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Scorecard Modal -->
+    <div class="modal-overlay" id="score-modal">
+        <div class="modal-content-box" style="max-width: 780px;">
+            <div class="modal-header">
+                <h3 class="modal-title">CONTEST FINAL SCORECARD</h3>
+                <button class="btn-close-modal" id="close-score-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 24px; text-align: center;">
+                    <div style="background: var(--bg-subtle); padding: 14px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.5px;">TEAM</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-top: 4px; font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="summary-team-name">—</div>
+                    </div>
+                    <div style="background: var(--bg-subtle); padding: 14px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.5px;">BOXES SOLVED</div>
+                        <div style="font-size: 18px; font-weight: 800; color: #10b981; margin-top: 2px; font-family: var(--font-display);" id="summary-solved-count">0 / 8</div>
+                    </div>
+                    <div style="background: var(--bg-subtle); padding: 14px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.5px;">TOTAL SCORE</div>
+                        <div style="font-size: 20px; font-weight: 900; color: var(--brand-red); margin-top: 1px; font-family: var(--font-display);" id="summary-total-score">0 / 2700 PTS</div>
+                    </div>
+                    <div style="background: var(--bg-subtle); padding: 14px 12px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 800; letter-spacing: 0.5px;">DEDUCTIONS</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--accent-amber); margin-top: 4px; font-family: var(--font-mono);" id="summary-deductions">0 PTS</div>
+                    </div>
+                </div>
+
+                <table class="scoreboard-table">
+                    <thead>
+                        <tr>
+                            <th>CHALLENGE</th>
+                            <th>CATEGORY</th>
+                            <th>STATUS</th>
+                            <th style="text-align: right;">POINTS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary-table-body">
+                        <!-- Populated by dashboard.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/dashboard.js?v=20260918_sec2"></script>
+</body>
+</html>

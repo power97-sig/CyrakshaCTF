@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  # All-in-One CTF Arena (Nginx + Hub + CTF0-CTF5 + Flask + Node.js)
+  ctf-arena:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cyraksha-ctf-arena
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
+    restart: unless-stopped

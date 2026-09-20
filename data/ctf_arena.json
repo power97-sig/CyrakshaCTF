@@ -1,0 +1,149 @@
+{
+  "admins": [
+    {
+      "id": "admin_1788046220333",
+      "name": "Contest Director",
+      "email": "director@cyraksha.org",
+      "passwordHash": "205ceb1645e6abfeb5d99efee2c3befcfea85b063506e7bf8615d63ebc49df67",
+      "role": "SUPER_ADMIN",
+      "registeredAt": "2026-08-29T23:30:20.333Z"
+    }
+  ],
+  "participants": {
+    "admin": {
+      "teamName": "admin",
+      "password": "!@12!@#123!@#$1234aA",
+      "mode": "team",
+      "registeredAt": "2026-09-17T21:44:21.603Z",
+      "startTime": "2026-09-17T21:44:21.599Z",
+      "lastActive": "2026-09-18T15:17:59.938Z",
+      "solved": {
+        "ctf0": {
+          "points": 200,
+          "flagSubmitted": "flag{inspect_before_you_click}",
+          "timestamp": "2026-09-17T21:48:16.516Z"
+        },
+        "ctf7": {
+          "points": 200,
+          "flagSubmitted": "CTF{y0u_f0und_th3_v4ult_a996a3ba}",
+          "timestamp": "2026-09-18T15:12:33.489Z"
+        }
+      },
+      "hintsUnlocked": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "totalScore": 400,
+      "lastSolveTime": "2026-09-18T15:12:33.489Z",
+      "hasGivenUp": false,
+      "concludedAt": null
+    },
+    "test": {
+      "teamName": "Test",
+      "password": "Test@1234",
+      "mode": "solo",
+      "registeredAt": "2026-09-18T13:52:58.650Z",
+      "startTime": "2026-09-18T13:52:58.360Z",
+      "lastActive": "2026-09-18T14:00:12.364Z",
+      "solved": {},
+      "hintsUnlocked": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "totalScore": 0,
+      "lastSolveTime": null,
+      "hasGivenUp": false,
+      "concludedAt": null
+    },
+    "sahyak saha": {
+      "teamName": "sahyak saha",
+      "password": "manpup",
+      "mode": "team",
+      "registeredAt": "2026-09-18T14:34:44.202Z",
+      "startTime": "2026-09-18T14:34:43.746Z",
+      "lastActive": "2026-09-18T15:06:48.822Z",
+      "solved": {},
+      "hintsUnlocked": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "totalScore": 0,
+      "lastSolveTime": null,
+      "hasGivenUp": false,
+      "concludedAt": null
+    },
+    "admin1": {
+      "teamName": "admin1",
+      "password": "!@12!@#123!@#$1234aA",
+      "mode": "team",
+      "registeredAt": "2026-09-18T15:13:27.953Z",
+      "startTime": "2026-09-18T15:13:27.871Z",
+      "lastActive": "2026-09-18T15:17:59.936Z",
+      "solved": {
+        "ctf7": {
+          "points": 200,
+          "flagSubmitted": "CTF{y0u_f0und_th3_v4ult_17ca246f}",
+          "timestamp": "2026-09-18T15:14:53.402Z"
+        }
+      },
+      "hintsUnlocked": {
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "totalScore": 200,
+      "lastSolveTime": "2026-09-18T15:14:53.402Z",
+      "hasGivenUp": false,
+      "concludedAt": null
+    }
+  },
+  "solveEvents": [
+    {
+      "id": "ev_1789681696519",
+      "teamName": "admin",
+      "cid": "ctf0",
+      "points": 200,
+      "timestamp": "2026-09-17T21:48:16.516Z"
+    },
+    {
+      "id": "ev_1789744353544",
+      "teamName": "admin",
+      "cid": "ctf7",
+      "points": 200,
+      "timestamp": "2026-09-18T15:12:33.489Z"
+    },
+    {
+      "id": "ev_1789744493454",
+      "teamName": "admin1",
+      "cid": "ctf7",
+      "points": 200,
+      "timestamp": "2026-09-18T15:14:53.402Z"
+    }
+  ],
+  "adminSessions": {
+    "11f71b4a3a25e8ab7560a2043dfa52274745ba5c7af1fc8a56d223027a8b2ddf": {
+      "id": "master_admin",
+      "name": "Master Admin",
+      "email": "admin",
+      "role": "SUPER_ADMIN",
+      "createdAt": "2026-09-17T21:42:38.403Z"
+    },
+    "9452d36f36c6daa4e460ad0f86cb9ff8558f7b28731a5ea0040d6eb24c3e1745": {
+      "id": "master_admin",
+      "name": "Master Admin",
+      "email": "admin",
+      "role": "SUPER_ADMIN",
+      "createdAt": "2026-09-18T13:53:30.513Z"
+    },
+    "34144f02c5e7f09c630fef8f593a60a10e03b4687c6d0b352279c58da8390f3f": {
+      "id": "master_admin",
+      "name": "Master Admin",
+      "email": "admin",
+      "role": "SUPER_ADMIN",
+      "createdAt": "2026-09-18T14:32:42.618Z"
+    }
+  }
+}
