@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hidden Message — CTF BOX</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    
+    <div class="app-layout">
+        <header class="navbar">
+            <a href="../dashboard.html" target="_top" class="nav-brand">
+                <span class="brand-m">M</span>
+                <span class="brand-dot">.</span>
+                <span class="brand-title">CTF BOX</span>
+                <span class="brand-arena-badge">CHALLENGE 04</span>
+            </a>
+            
+            <div class="nav-stats">
+                <div class="stat-pill">
+                    <span class="stat-label">CATEGORY</span>
+                    <span class="stat-val category-badge">STEGANOGRAPHY</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">MAX POINTS</span>
+                    <span class="stat-val points-badge">200 PTS</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">CURRENT YIELD</span>
+                    <span class="stat-val current-points" id="nav-current-pts">200 PTS</span>
+                </div>
+                <div class="stat-pill status-pill">
+                    <span class="status-dot"></span>
+                    <span class="stat-val" id="challenge-status-text">UNSOLVED</span>
+                </div>
+                <a href="../dashboard.html" target="_top" class="btn-back-arena">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Back to Arena</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="challenge-hero">
+                <div class="challenge-header-top">
+                    <div class="box-tag">BOX 05</div>
+                    <div class="difficulty-rating">
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star filled">★</span>
+                        <span class="diff-star">★</span>
+                        <span class="diff-star">★</span>
+                        <span class="diff-star">★</span>
+                        <span class="diff-text">Medium Difficulty</span>
+                    </div>
+                </div>
+                <h1 class="challenge-title">THE HIDDEN MESSAGE</h1>
+                <p class="challenge-subtitle">Extract confidential intelligence concealed within digital media.</p>
+            </section>
+
+            <div class="grid-container">
+                <div class="left-column">
+                    <div class="card mission-card">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <h2>Challenge Description</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="briefing-box">
+                                <div class="briefing-title">Something Hidden</div>
+                                <p class="briefing-line">Someone sent us this image.</p>
+                                <p class="briefing-line">They claim it's just a normal photograph.</p>
+                                <p class="briefing-line highlight-line">We don't believe them.</p>
+                                <p class="briefing-line action-line">Find what they're hiding.</p>
+                            </div>
+
+                            <div class="target-artifact-box">
+                                <div class="artifact-preview">
+                                    <img src="secret.jpg" alt="Secret Evidence" id="target-img-preview" class="thumbnail-img">
+                                    <div class="artifact-overlay">
+                                        <button class="preview-btn" id="inspect-preview-btn">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                            Inspect
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="artifact-info">
+                                    <div class="artifact-filename">secret.jpg</div>
+                                    <div class="artifact-meta">
+                                        <span>JPEG Image</span>
+                                        <span>•</span>
+                                        <span>High Resolution</span>
+                                        <span>•</span>
+                                        <span>Suspect Carrier</span>
+                                    </div>
+                                    <div class="artifact-actions">
+                                        <a href="secret.jpg" download="secret.jpg" class="btn btn-primary" id="download-artifact-btn">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                            Download secret.jpg
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card hints-card">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <h2>Tactical Hints System</h2>
+                            <div class="hint-points-tracker">
+                                <span class="pts-badge" id="pts-reward-badge">200 PTS Reward</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="hints-list">
+                                <div class="hint-item" id="hint-1-item">
+                                    <div class="hint-item-header">
+                                        <div class="hint-title-group">
+                                            <span class="hint-index">HINT 1</span>
+                                            <span class="hint-cost free-cost">FREE</span>
+                                        </div>
+                                        <button class="hint-toggle-btn" id="unlock-hint-1">Unlock Hint</button>
+                                    </div>
+                                    <div class="hint-content" id="hint-1-content">
+                                        <div class="hint-text-box">
+                                            <p>The picture may contain more than pixels.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hint-item" id="hint-2-item">
+                                    <div class="hint-item-header">
+                                        <div class="hint-title-group">
+                                            <span class="hint-index">HINT 2</span>
+                                            <span class="hint-cost paid-cost">-10 POINTS</span>
+                                        </div>
+                                        <button class="hint-toggle-btn" id="unlock-hint-2">Unlock (-10 Pts)</button>
+                                    </div>
+                                    <div class="hint-content" id="hint-2-content">
+                                        <div class="hint-text-box">
+                                            <p>Search for tools used to hide information inside images.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hint-item" id="hint-3-item">
+                                    <div class="hint-item-header">
+                                        <div class="hint-title-group">
+                                            <span class="hint-index">HINT 3</span>
+                                            <span class="hint-cost paid-cost">-20 POINTS</span>
+                                        </div>
+                                        <button class="hint-toggle-btn" id="unlock-hint-3">Unlock (-20 Pts)</button>
+                                    </div>
+                                    <div class="hint-content" id="hint-3-content">
+                                        <div class="hint-text-box">
+                                            <p><code class="inline-code">steghide</code> might be worth investigating.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="card workbench-card">
+                        <div class="card-header workbench-header">
+                            <div class="tab-triggers">
+                                <button class="tab-btn active" data-tab="terminal-tab">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="4 17 10 11 4 5"></polyline>
+                                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                                    </svg>
+                                    Virtual Terminal
+                                </button>
+                                <button class="tab-btn" data-tab="inspector-tab">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                        <polyline points="21 15 16 10 5 21"></polyline>
+                                    </svg>
+                                    Image Analyzer
+                                </button>
+                            </div>
+                            <div class="terminal-ctrls">
+                                <span class="term-dot term-close"></span>
+                                <span class="term-dot term-min"></span>
+                                <span class="term-dot term-max"></span>
+                            </div>
+                        </div>
+
+                        <div class="card-body no-padding tab-content-wrapper">
+                            <div class="tab-pane active" id="terminal-tab">
+                                <div class="terminal-container" id="terminal-window">
+                                    <div class="terminal-output" id="terminal-screen"></div>
+                                    <div class="terminal-input-row">
+                                        <span class="term-prompt">analyst@cyraksha:~$</span>
+                                        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command...">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="inspector-tab">
+                                <div class="inspector-layout">
+                                    <div class="inspector-preview-panel">
+                                        <div class="preview-stage">
+                                            <img src="secret.jpg" id="analyzer-target" alt="Evidence Analyzer">
+                                            <div class="scanline-overlay"></div>
+                                        </div>
+                                        <div class="channel-controls">
+                                            <button class="filter-btn active" data-filter="normal">Normal</button>
+                                            <button class="filter-btn" data-filter="invert">Invert</button>
+                                            <button class="filter-btn" data-filter="contrast">High Contrast</button>
+                                            <button class="filter-btn" data-filter="threshold">Threshold</button>
+                                            <button class="filter-btn" data-filter="edges">Edge Detect</button>
+                                        </div>
+                                    </div>
+                                    <div class="inspector-data-panel">
+                                        <div class="data-block">
+                                            <h3>EXIF METADATA SUMMARY</h3>
+                                            <div class="kv-grid">
+                                                <div class="k">Filename:</div>
+                                                <div class="v">secret.jpg</div>
+                                                <div class="k">Format:</div>
+                                                <div class="v">JPEG / JFIF Baseline</div>
+                                                <div class="k">Color Space:</div>
+                                                <div class="v">sRGB 8-bit</div>
+                                                <div class="k">Compression:</div>
+                                                <div class="v">DCT / Quantized</div>
+                                                <div class="k">Carrier Type:</div>
+                                                <div class="v status-warn">Steganographic Carrier</div>
+                                            </div>
+                                        </div>
+                                        <div class="data-block">
+                                            <h3>HEX HEADER SAMPLE</h3>
+                                            <pre class="hex-dump">00000000  ff d8 ff e0 00 10 4a 46  49 46 00 01 01 01 00 48  |......JFIF.....H|
+00000010  00 48 00 00 ff db 00 43  00 08 06 06 07 06 05 08  |.H.....C........|
+00000020  07 07 07 09 09 08 0a 0c  14 0d 0c 0b 0b 0c 19 12  |................|
+00000030  13 0f 14 1d 1a 1f 1e 1d  1a 1c 1c 20 24 2e 27 20  |........... $.' |</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="image-modal">
+        <div class="image-modal-card">
+            <div class="image-modal-header">
+                <h3>secret.jpg — High Definition Preview</h3>
+                <button class="close-img-modal" id="close-img-modal-btn">✕</button>
+            </div>
+            <div class="image-modal-body">
+                <img src="secret.jpg" alt="Secret Full View" class="full-view-img">
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/dynamic-flags.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.querySelectorAll('a[href*="dashboard.html"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (window.self !== window.top) {
+                    e.preventDefault();
+                    try {
+                        window.parent.postMessage({ action: 'close_runner_modal' }, '*');
+                    } catch (err) {
+                        window.top.location.href = a.href;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
